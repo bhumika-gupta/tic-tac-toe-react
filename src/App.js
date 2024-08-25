@@ -1,21 +1,3 @@
-
-/* 
-
-first line: 
-- "export" keyword makes the function accessible
-outside of this file
-- "default" keyword tells other files using your code that
-it's the main function in your file
-
-second line: returns a button
-- "return" keyword = whatever comes after is returned to
-the caller of the function
-- "button" is a JSX element (combo of JS code & HTML tags
-that describes what you'd like to display)
-
-*/
-
-
 import { useState } from 'react';
 
 function Square({value, onSquareClick}) {
@@ -32,12 +14,6 @@ function Square({value, onSquareClick}) {
 
 
 function Board({ xIsNext, squares, onPlay }) {
-
-  // const [xIsNext, setXIsNext] = useState(true);
-
-  // const [value, setValue] = useState(null);
-  // const [squares, setSquares] = useState(Array(9).fill(null));
-
 
   function handleClick(i) {
     
@@ -57,9 +33,6 @@ function Board({ xIsNext, squares, onPlay }) {
         nextSquares[i] = "O";
       }
       onPlay(nextSquares);
-      
-      //setSquares(nextSquares);
-      //setXIsNext(!xIsNext);
     
   }
 
@@ -103,49 +76,22 @@ function Board({ xIsNext, squares, onPlay }) {
 
 export default function Game() {
 
-  //const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
-  // const currentSquares = history[history.length - 1];
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares) {
-    //history.push(currentSquares); (not right)
-
-
-
-    //setHistory(history); (not right)
-
-
-    // given way:
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory); 
 
     setCurrentMove(nextHistory.length - 1);
-
-
-
-    //ur own way: (still not right)
-    //setHistory(history.push(...nextSquares));
-    //history.push(...nextSquares);
-    //setHistory(history);
-
-    //setXIsNext(!xIsNext);
-
-
-
-
-
   }
 
   function jumpTo(nextMove) {
     setCurrentMove(nextMove);
-    //setXIsNext(nextMove % 2 === 0);
 
   }
-
-  // const arrayPastMoves = history.map((move) => <li>{move}</li>);
 
   const moves = history.map((squares, move) => { 
     let description;
@@ -163,9 +109,6 @@ export default function Game() {
 
   const moveInformation = "You are at move #" + currentMove;
 
-
-
-
   return (
     <div className="game">
       <div className="game-board">
@@ -179,9 +122,6 @@ export default function Game() {
     </div>
   );
 }
-
-
-
 
 function calculateWinner(squares) {
   const lines = [
