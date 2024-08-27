@@ -44,13 +44,72 @@ function Board({ xIsNext, squares, onPlay }) {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
+
+
+
+  /*let boardRows = [];
+  let boardSquares = [];
+
+  for (let rowValue = 0; rowValue < 3; rowValue++) {
+    
+    
+
+    for (let squareValue = 0; squareValue < 9; squareValue++) {
+      boardSquares.push
+        (this.Square(squareValue);
+      );
+
+      
+    }
+
+  } */
+
+  
+  const boardRows = [Array(3)].map((row, rowIndex) => {
+    const boardSquares = [Array(3)].map((square, squareIndex) => {
+      return (
+        <Square 
+          key={3* rowIndex + squareIndex}
+          value={squares[3 * rowIndex + squareIndex]}
+          onSquareClick={() => handleClick(3 * rowIndex + squareIndex)}
+        />
+      );
+    });
+  
+  return (
+    <div key={rowIndex} className="board-row">
+        {boardSquares}
+    </div>
+    )
+  }); 
+
+
+
+
   // () => syntax: When the square is clicked, the code after the => “arrow” will run, calling handleClick(0)
 
   return (
     <>
       <div className="status">{status}</div>
+      {boardRows}
 
-      <div className="board-row">
+      
+        {/* <div key={rowIndex} className="board-row">
+          {boardSquares}
+        </div> */}
+      
+    </>
+  );
+}
+/*
+        for (let squareValue = 0; squareValue < 9; squareValue++) {
+          <Square value={squares[squareValue]} onSquareClick={() => handleClick(squareValue)}/>
+        } 
+        
+      } */
+/* 
+
+        
 
         <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
         <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
@@ -70,9 +129,7 @@ function Board({ xIsNext, squares, onPlay }) {
         <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
 
       </div>
-    </>
-  );
-}
+      */
 
 export default function Game() {
 
@@ -96,9 +153,11 @@ export default function Game() {
   const moves = history.map((squares, move) => { 
     let description;
     if (move > 0) { 
+      //  && !calculateWinner(currentSquares)
       description = 'Go to move #' + move;
     } else {
-      description = 'Go to game start';
+      description = 'Restart Game';
+
     }
     return (
       <li key={move}>
@@ -107,7 +166,13 @@ export default function Game() {
     );
   });
 
-  const moveInformation = "You are at move #" + currentMove;
+
+  const moveInformation = (currentMove > 0) ?
+    "You are at move #" + currentMove + ".":
+    "You are at the start of the game."
+
+  
+
 
   return (
     <div className="game">
@@ -116,12 +181,19 @@ export default function Game() {
       </div>
       <div className="game-info">
         <ol>Game Information:</ol>
-        {moveInformation}
+        <ol>{moveInformation}</ol>
         {moves}
       </div>
     </div>
   );
 }
+
+/*
+function postGame() {
+  
+
+
+} */
 
 function calculateWinner(squares) {
   const lines = [
