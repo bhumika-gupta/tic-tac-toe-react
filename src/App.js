@@ -64,7 +64,8 @@ function Board({ xIsNext, squares, onPlay }) {
 
   } */
 
-  
+  // GOOD WAY 
+  /*
   const boardRows = [Array(3)].map((row, rowIndex) => {
     const boardSquares = [Array(3)].map((square, squareIndex) => {
       return (
@@ -81,10 +82,29 @@ function Board({ xIsNext, squares, onPlay }) {
         {boardSquares}
     </div>
     )
-  }); 
+  }); */
 
+  // but i wanna re-work my way:
+  const boardRows = [];
+  for (rowValue = 0; rowValue < 3; rowValue++) {
+    const boardSquares = [];
+    for (squareValue = 0; squareValue < 3; squareValue++) {
+      const index = 3 * rowValue + squareValue;
+      boardSquares.push(
+        <Square
+          key={index}
+          value={squares[index]}
+          onSquareClick={() => handleClick(index)}
 
-
+        />
+      );
+    }
+    boardRows.push(
+      <div key={rowValue} className="board-row">
+        {boardSquares}
+      </div>
+    );
+  }
 
   // () => syntax: When the square is clicked, the code after the => “arrow” will run, calling handleClick(0)
 
@@ -92,12 +112,6 @@ function Board({ xIsNext, squares, onPlay }) {
     <>
       <div className="status">{status}</div>
       {boardRows}
-
-      
-        {/* <div key={rowIndex} className="board-row">
-          {boardSquares}
-        </div> */}
-      
     </>
   );
 }
